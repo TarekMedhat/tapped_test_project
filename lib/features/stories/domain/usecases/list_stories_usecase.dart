@@ -10,7 +10,7 @@ class ListStoriesUsecase implements ListStoriesUsecaseContract {
   }) : _storyService = storyService;
 
   @override
-  Future<List<Story>> listStories() async {
+  Future<List<Story>> list() async {
     return _storyService.listStories();
   }
 }

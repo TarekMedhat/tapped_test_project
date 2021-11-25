@@ -1,8 +1,11 @@
 # tapped_test_project
 
-A new Flutter application.
+A social media test project.
 
 ## Getting Started
+
+Technical Design:
+https://drive.google.com/drive/folders/1PhYYhSesHf0cwr1A-3OvoW_RoiORhtsw
 
 This project is a starting point for a Flutter application.
 
