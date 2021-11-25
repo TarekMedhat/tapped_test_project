@@ -28,11 +28,13 @@ class HomeScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeBloc = BlocProvider.of<HomeBloc>(context);
     return Scaffold(
       body: BlocConsumer<HomeBloc, HomeState>(
+        bloc: homeBloc,
         listenWhen: (oldS, newS) => newS.runtimeType != oldS.runtimeType,
         listener: (_, state) {
-          _onStateListenHandler(context: context, state: state);
+          _onStateListenHandler(context: context, bloc: homeBloc, state: state);
         },
         builder: (context, state) => CustomScrollView(
           slivers: [
@@ -109,7 +111,11 @@ class HomeScreenView extends StatelessWidget {
     );
   }
 
-  void _onStateListenHandler({required BuildContext context, required HomeState state}) {
+  void _onStateListenHandler({
+    required BuildContext context,
+    required HomeBloc bloc,
+    required HomeState state,
+  }) {
     if (state is HomeLoadDataFailureState) {
       showDialog(
           context: context,
@@ -125,7 +131,7 @@ class HomeScreenView extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      BlocProvider.of<HomeBloc>(context).add(HomeLaunchedEvent());
+                      bloc.add(HomeLaunchedEvent());
                       Navigator.of(context).pop();
                     },
                     child: Text("Retry", style: TextStyle(fontSize: 15.sp(context))),
