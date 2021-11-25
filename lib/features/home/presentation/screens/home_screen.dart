@@ -19,7 +19,6 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => HomeBlocProvider.get()..add(HomeLaunchedEvent()),
       child: const HomeScreenView(),
-      lazy: false,
     );
   }
 }
@@ -32,7 +31,9 @@ class HomeScreenView extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<HomeBloc, HomeState>(
         listenWhen: (oldS, newS) => newS.runtimeType != oldS.runtimeType,
-        listener: _onStateListenHandler,
+        listener: (_, state) {
+          _onStateListenHandler(context: context, state: state);
+        },
         builder: (context, state) => CustomScrollView(
           slivers: [
             const HomeAppBar(),
@@ -108,11 +109,11 @@ class HomeScreenView extends StatelessWidget {
     );
   }
 
-  void _onStateListenHandler(BuildContext context, HomeState state) {
+  void _onStateListenHandler({required BuildContext context, required HomeState state}) {
     if (state is HomeLoadDataFailureState) {
       showDialog(
           context: context,
-          builder: (_) => AlertDialog(
+          builder: (context) => AlertDialog(
                 title: Text("Error", style: TextStyle(fontSize: 20.sp(context))),
                 content: Text(state.errorMessage, style: TextStyle(fontSize: 16.sp(context))),
                 actions: [

@@ -20,7 +20,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _listFeedsUsecase = listFeedsUsecase,
         super(HomeInitialState()) {
     on<HomeEvent>((event, emit) async {
-      print(event);
       if (event is HomeLaunchedEvent) {
         await _onLaunchedEvent(event: event, emit: emit);
       }
